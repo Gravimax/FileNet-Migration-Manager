@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+	<Product Id="*" Name="FileNet Migration Manager" Language="1033" Version="1.0.1.87" Manufacturer="Uzer.io" UpgradeCode="695de3fe-afbf-48f0-95e4-916808b97212">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<PropertyRef Id="WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED"/>
+
+		<Condition Message="This application requires .NET Framework 4.5.2. Please install the .NET Framework then run this installer again.">
+			<![CDATA[Installed OR WIX_IS_NETFRAMEWORK_452_OR_LATER_INSTALLED]]>
+		</Condition>
+		
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="APPLICATIONFOLDER" Name="FileNet Migration Manager" />
+			</Directory>
+			<Directory Id="ProgramMenuFolder">
+				<Directory Id="ApplicationProgramsFolder" Name="FileNet Migration Manager" />
+			</Directory>
+      <Directory Id="DesktopFolder" Name="Desktop" />
+		</Directory>
+		
+		<Feature Id="ProductFeature" Title="FileNet Migraion Manager Setup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="ApplicationShortcuts" />
+		</Feature>
+
+    <Icon Id="App.ico" SourceFile="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\Resources\Images\App.ico"/>
+    
+    <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONFOLDER" />
+    <UIRef Id="WixUI_InstallDir" />
+
+    <WixVariable Id="WixUILicenseRtf" Value="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\License.rtf" />
+	</Product>
+
+	<Fragment>
+		<ComponentGroup Id="ApplicationShortcuts" Directory="ApplicationProgramsFolder">
+			<Component Id="ApplicationShortcut" Guid="122616AD-99A2-4296-8335-EF44240B0295">
+				<Shortcut Id="ApplicationStartMenuShortcut" Name="FileNet Migration Manager" Icon="App.ico" Target="[APPLICATIONFOLDER]FileNetMigrationManager.exe" WorkingDirectory="APPLICATIONFOLDER" />
+        <Shortcut Id="ApplicationDesktopShortcut" Name="FileNet Migration Manager" Icon="App.ico" Directory="DesktopFolder" Target="[APPLICATIONFOLDER]FileNetMigrationManager.exe" WorkingDirectory="APPLICATIONFOLDER" />
+				<Shortcut Id="ApplicationUninstallShortcut" Name="Uninstall FileNet Migration Manager" Icon="App.ico" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" />
+				<RemoveFolder Id="CleanUpShortCuts" Directory="ApplicationProgramsFolder" On="uninstall"/>
+				<RegistryValue Root="HKCU" Key="Software\Microsoft\FileNet Migration Manager" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+	
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="APPLICATIONFOLDER">
+			<Component Id="FileNetMigrationManager.exe" Guid="23CB2B88-C009-4744-A233-FD1A67E0342A">
+				<File Id="FileNetMigrationManager.exe" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\FileNetMigrationManager.exe" KeyPath="yes" Checksum="yes" />
+			</Component>
+			<Component Id="EPPlus.dll" Guid="CDBB7FB7-A4E9-4B6F-AEAF-66AAF1687E0A">
+				<File Id="EPPlus.dll" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\EPPlus.dll"  KeyPath="yes" />
+			</Component>
+			<Component Id="FileNet.Api.dll" Guid="1CD0F893-A498-45CB-98CB-51CB2D91081A">
+				<File Id="FileNet.Api.dll" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\FileNet.Api.dll"  KeyPath="yes" />
+			</Component>
+			<Component Id="GalaSoft.MvvmLight.dll" Guid="91BB8ED0-47D1-4581-99E1-9CEF28280856">
+				<File Id="GalaSoft.MvvmLight.dll" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\GalaSoft.MvvmLight.dll"  KeyPath="yes" />
+			</Component>
+			<Component Id="GalaSoft.MvvmLight.Extras.dll" Guid="48372A4E-9BBD-4154-85DA-CEE16EDBC701">
+				<File Id="GalaSoft.MvvmLight.Extras.dll" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\GalaSoft.MvvmLight.Extras.dll"  KeyPath="yes" />
+			</Component>
+			<Component Id="GalaSoft.MvvmLight.Platform.dll" Guid="385B8412-45BC-4F79-BC5A-B7D2435D6387">
+				<File Id="GalaSoft.MvvmLight.Platform.dll" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\GalaSoft.MvvmLight.Platform.dll"  KeyPath="yes" />
+			</Component>
+			<Component Id="Itenso.Windows.Controls.ListViewLayout.dll" Guid="35F9739B-9E98-4729-9D2E-22A65BA290E3">
+				<File Id="Itenso.Windows.Controls.ListViewLayout.dll" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\Itenso.Windows.Controls.ListViewLayout.dll"  KeyPath="yes" />
+			</Component>
+			<Component Id="MaterialDesignColors.dll" Guid="13E9CB2C-835A-4E1F-A221-030537D32F62">
+				<File Id="MaterialDesignColors.dll" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\MaterialDesignColors.dll"  KeyPath="yes" />
+			</Component>
+			<Component Id="MaterialDesignThemes.Wpf.dll" Guid="93DD0D99-9A3C-426B-912A-295C770D4F62">
+				<File Id="MaterialDesignThemes.Wpf.dll" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\MaterialDesignThemes.Wpf.dll"  KeyPath="yes" />
+			</Component>
+			<Component Id="Microsoft.Practices.ServiceLocation.dll" Guid="2E619182-C848-45F7-B076-1E2F1F2A4E21">
+				<File Id="Microsoft.Practices.ServiceLocation.dll" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\Microsoft.Practices.ServiceLocation.dll"  KeyPath="yes" />
+			</Component>
+			<Component Id="SKGL.dll" Guid="618E4A8B-B058-4CC3-8927-C29915157419">
+				<File Id="SKGL.dll" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\SKGL.dll"  KeyPath="yes" />
+			</Component>
+			<Component Id="System.Windows.Interactivity.dll" Guid="1A7CAF8B-9C6E-4ADB-BB44-8D8FB92F8F0E">
+				<File Id="System.Windows.Interactivity.dll" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\bin\Release\System.Windows.Interactivity.dll"  KeyPath="yes" />
+			</Component>
+      <Component Id="App.ico" Guid="041D78B0-8382-43EB-A4E8-4A083ECCBFA5">
+        <File Id="App.ico" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\Resources\Images\App.ico"  KeyPath="yes" />
+      </Component>
+      <Component Id="License.rtf" Guid="F90B769B-778E-4F31-8FAA-0C1AC67E8585">
+        <File Id="License.rtf" Source="C:\Users\rbaro\Documents\Visual Studio 2015\Projects\FileNetMigrationManager\FileNetMigrationManager\License.rtf"  KeyPath="yes" />
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
